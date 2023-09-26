@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>アキネーターお題ジェネレーター</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        button {
+            background-color: #ff6347;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #00ced1;
+        }
+
+        p {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+
+        img {
+            max-width: 300px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>アキネーターお題ジェネレーター</h1>
+    <button onclick="showRandomWordAndImage()">ここを押してお題を生成</button>
+    <p id="randomWord">ここにお題が表示されます。</p>
+    <img id="randomImage" src="https://upswell.jp/img/icon_akinator.png" alt=" ">
+
+    <script>
+        const wordsAndImages = [
+            {
+                word: "twitter",
+                image: "data:image/png;base64,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"
+            },
+            {
+                word: "江戸川コナン",
+                image: "https://www.ytv.co.jp/conan/character/character1/images/img_conan.png"
+            },
+            {
+                word: "スマートフォン",
+                image: "https://mmdlabo.jp/storage/article/list_image/2012.png"
+            },
+            {
+                word: "YouTube",
+                image: "https://www.youtube.com/img/desktop/yt_1200.png"
+            },
+            {
+                word: "Minecraft",
+                image: "https://im.uniqlo.com/global-cms/spa/resbf31ca58dc8c9d48d8f98ebfabfe7cadfr.jpg"
+            },
+            {
+                word: "ギター",
+                image: "https://free-icons.net/wp-content/uploads/2020/11/music009.png"
+            },
+            {
+                word: "パラシュート",
+                image: "https://thumb.photo-ac.com/9c/9c59abeeec50d249b18172d225a9db01_t.jpeg"
+            },
+            {
+                word: "チェス",
+                image: "https://thumb.ac-illust.com/02/024ad395f6239379a334def97101a166_t.jpeg"
+            },
+            {
+                word: "扇子",
+                image: "https://www.hakuchikudo.co.jp/makeshop/womens/mizuka/c01.jpg"
+            },
+            {
+                word: "スパゲッティ",
+                image: "https://www.pakutaso.com/shared/img/thumb/FCFOU_tomatoso-supasuta.jpg"
+            },
+            {
+                word: "腕時計",
+                image: "https://publicdomainq.net/images/201709/09s/publicdomainq-0013155jan.jpg"
+            },
+            {
+                word: "にじさんじ",
+                image: "https://yt3.googleusercontent.com/ytc/APkrFKawlRN9Zg_MXJwO3OTw5bkTyfa7S_gQ2hcLlWM6FA=s900-c-k-c0x00ffffff-no-rj"
+            },
+            {
+                word: "タコス",
+                image: "https://t1.gstatic.com/licensed-image?q=tbn:ANd9GcR8cwEvC4A6CutRrMu2vXyQxuAvoUzEdeo34TZH2E6tjxX3yAeKJaBU_Ib5yFpgtpoA"
+            },
+            {
+                word: "地球グミ",
+                image: "https://img.sirabee.com/wp-content/uploads/2022/05/sirabee20220518gumi16-1200x800.jpg"
+            },
+            {
+                word: "ワイヤレスイヤホン",
+                image: "https://m.media-amazon.com/images/I/51DYY6DIXKL._AC_UF894,1000_QL80_.jpg"
+            },
+        ];
+        function showRandomWordAndImage() {
+            const randomIndex = Math.floor(Math.random() * wordsAndImages.length);
+            const randomWordAndImage = wordsAndImages[randomIndex];
+            document.getElementById("randomWord").textContent = randomWordAndImage.word;
+            document.getElementById("randomImage").src = randomWordAndImage.image;
+        }
+    </script>
+</body>
+</html>
